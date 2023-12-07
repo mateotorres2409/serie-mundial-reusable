@@ -43,3 +43,15 @@ jobs:
             secret_apellido: ${{ secrets.apellido }}
           run: |
             echo "Hello ${{ inputs.name }} $secret_apellido, you are in the ${{ vars.env_text }} environment."
+        - name: evaluate_1
+          shell: bash
+          env:
+            env_text: ${{ vars.env_text }}
+          if: env.env_text == 'PRODUCTION'
+          run: echo "Fue Producción"
+        - name: evaluate_2
+          shell: bash
+          env:
+            env_text: ${{ vars.env_text }}
+          if: env.env_text == 'DEVELOPMENT'
+          run: echo "Fue Desarrollo"
