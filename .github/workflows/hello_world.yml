@@ -1,7 +1,13 @@
 on:
     workflow_call:
         inputs:
+            environment:
+                required: true
+                type: string
             name:
+                required: true
+                type: string            
+            env_text:
                 required: true
                 type: string
             version_other:
@@ -15,6 +21,7 @@ jobs:
     greetings:
         name: greetings
         runs-on: ubuntu-latest
+        environment: ${{ inputs.environment }}
         steps:
         - name: checkout_current
           uses: actions/checkout@v4
@@ -33,4 +40,4 @@ jobs:
             ls -ltra other
         - name: print
           run: |
-            echo "Hello, ${{ inputs.name }}"
+            echo "Hello ${{ inputs.name }}, you are in the ${{ inputs.env_text }} environment."
