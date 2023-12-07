@@ -40,4 +40,4 @@ jobs:
             ls -ltra other
         - name: print
           run: |
-            echo "Hello ${{ inputs.name }}, you are in the ${{ inputs.env_text }} environment."
+            echo "Hello ${{ inputs.name }}, you are in the ${{ vars.env_text }} environment."
