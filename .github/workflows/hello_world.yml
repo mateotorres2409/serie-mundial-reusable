@@ -33,6 +33,7 @@ jobs:
             ref: ${{ inputs.version_other }}
             token: ${{ secrets.gh_pat }}
             path: other
+        - run: ls -ltra
         - name: list
           run: |
             ls -ltra current
