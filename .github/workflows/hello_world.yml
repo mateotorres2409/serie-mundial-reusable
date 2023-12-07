@@ -1,0 +1,35 @@
+on:
+    workflow_call:
+        inputs:
+            name:
+                required: true
+                type: string
+            version_other:
+                required: false
+                type: string
+                default: main
+        secrets:
+            gh_pat:
+                required: true
+jobs:
+    greetings:
+        runs-on: ubuntu-latest
+        steps:
+        - name: checkout_current
+          uses: actions/checkout@v4
+          with:
+            path: current        
+        - name: checkout_other
+          uses: actions/checkout@v4
+          with:
+            repository: mateotorres2409/tribus-dav
+            ref: ${{ inputs.version_other }}
+            token: ${{ secrets.gh_pat }}
+            path: other
+        - name: list
+          run: |
+            ls -ltra current
+            ls -ltra other
+        - name: print
+          run: |
+            echo "Hello, ${{ inputs.name }}"
