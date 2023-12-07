@@ -1,0 +1,57 @@
+on:
+    workflow_call:
+        inputs:
+            environment:
+                required: true
+                type: string
+            name:
+                required: true
+                type: string  
+            version_other:
+                required: false
+                type: string
+                default: main
+        secrets:
+            gh_pat:
+                required: true
+            apellido:
+                required: true
+jobs:
+    greetings:
+        name: greetings
+        runs-on: ubuntu-latest
+        environment: ${{ inputs.environment }}
+        steps:
+        - name: checkout_current
+          uses: actions/checkout@v4
+          with:
+            path: current        
+        - name: checkout_other
+          uses: actions/checkout@v4
+          with:
+            repository: mateotorres2409/tribus-dav
+            ref: ${{ inputs.version_other }}
+            token: ${{ secrets.gh_pat }}
+            path: other
+        - name: list
+          run: |
+            ls -ltra current
+            ls -ltra other
+        - name: print
+          shell: bash
+          env:
+            secret_apellido: ${{ secrets.apellido }}
+          run: |
+            echo "Hello ${{ inputs.name }} $secret_apellido, you are in the ${{ vars.env_text }} environment."
+        - name: evaluate_1
+          shell: bash
+          env:
+            env_text: ${{ vars.env_text }}
+          if: env.env_text == 'PRODUCTION'
+          run: echo "Fue Producción"
+        - name: evaluate_2
+          shell: bash
+          env:
+            env_text: ${{ vars.env_text }}
+          if: env.env_text == 'DEVELOPMENT'
+          run: echo "Fue Desarrollo"
