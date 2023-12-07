@@ -6,16 +6,15 @@ on:
                 type: string
             name:
                 required: true
-                type: string            
-            env_text:
-                required: true
-                type: string
+                type: string  
             version_other:
                 required: false
                 type: string
                 default: main
         secrets:
             gh_pat:
+                required: true
+            apellido:
                 required: true
 jobs:
     greetings:
@@ -40,4 +39,4 @@ jobs:
             ls -ltra other
         - name: print
           run: |
-            echo "Hello ${{ inputs.name }}, you are in the ${{ vars.env_text }} environment."
+            echo "Hello ${{ inputs.name }} ${{ secrets.apellido }}, you are in the ${{ vars.env_text }} environment."
